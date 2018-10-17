@@ -4,9 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/xLib"
 )
 
 const (
@@ -20,35 +21,46 @@ const (
 
 )
 
-//TCommands - define log record
-type TCommands struct {
-	i         int
-	keyString string
-	pntString string
-}
-
-var cmd [2]TCommands
-
 //init - initialize function
 //fill array cmd
 //at index 0 - keep parameters of Circle
 //at index 1 - keep parameters of Polyline
-//at index 2 - keep parameters of LwPolyline
 func init() {
-	//Circle log record
-	cmd[0].i = _CircleCommandIndex
-	cmd[0].keyString = _CircleCommand
-	cmd[0].pntString = _CirclePrefixCoord
-	//Polyline log record
-	cmd[1].i = _PolylineCommandIndex
-	cmd[1].keyString = _PolylineCommand
-	cmd[1].pntString = _PolylinePrefixCoord
+}
+
+//parseParameters() - обработка параметров, возврат имён файлов и режима обработки
+func parseParameters() (int, string, string) {
+	inputType := 0
+	inputFileName := ""
+	outputFileName := ""
+	if strings.Contains(os.Args[1], "/c") {
+		inputType = 0
+		inputFileName = os.Args[2]
+		if len(os.Args) == 3 {
+			//if output file name not present in parameters
+			//make output file name from input file name, change ext to "xyz"
+			outputFileName = xLib.ChangeFileExt(os.Args[2], ".xyz")
+		} else {
+			outputFileName = os.Args[3]
+		}
+	} else {
+		inputType = 1
+		inputFileName = os.Args[1]
+		if len(os.Args) == 2 {
+			//if output file name not present in parameters
+			//make output file name from input file name, change ext to "xyz"
+			outputFileName = xLib.ChangeFileExt(os.Args[1], ".xyz")
+		} else {
+			outputFileName = os.Args[2]
+		}
+	}
+	return inputType, inputFileName, outputFileName
 }
 
 func main() {
 	var (
-		inputType     int //0 - обрабатываем круги, 1 - обрабатываем полилинии
-		index         int //index of current command in cmd[]
+		inputType int //0 - обрабатываем круги, 1 - обрабатываем полилинии
+		//index         int //index of current command in cmd[]
 		countCommands int //подсчёт найденных объектов: полилиний
 		//нужно для полилиний, чтобы писать "-999 -999 -999" в конце полилинии
 		outputFileName string
@@ -62,76 +74,55 @@ func main() {
 	if !TestInputParams() {
 		os.Exit(1)
 	}
-	fmt.Fprint(os.Stderr, "params preview ok \n")
+	fmt.Print("params preview ok \n")
 
-	//input type: circle -> 0, line -> 1
-	if strings.Contains(os.Args[1], "/c") {
-		fmt.Fprint(os.Stderr, "process CIRCLE \n")
-		inputType = 0
-		inputFileName = os.Args[2]
-		if len(os.Args) == 3 {
-			//if output file name not present in parameters
-			//make output file name from input file name, change ext to "xyz"
-			outputFileName = strings.TrimSuffix(os.Args[2], filepath.Ext(os.Args[2])) + ".xyz"
-		} else {
-			outputFileName = os.Args[3]
-		}
+	inputType, inputFileName, outputFileName = parseParameters()
+	if inputType == 0 {
+		fmt.Print("process CIRCLE \n")
 	} else {
-		fmt.Fprint(os.Stderr, "process POLYLINE \n")
-		inputType = 1
-		inputFileName = os.Args[1]
-		if len(os.Args) == 2 {
-			//if output file name not present in parameters
-			//make output file name from input file name, change ext to "xyz"
-			outputFileName = strings.TrimSuffix(os.Args[1], filepath.Ext(os.Args[1])) + ".xyz"
-		} else {
-			outputFileName = os.Args[2]
-		}
+		fmt.Print("process POLYLINE \n")
 	}
 
-	fmt.Println("input  file: ", inputFileName)
-
+	fmt.Print("input  file: '", inputFileName)
 	iFile, err = os.Open(inputFileName) //Open file to READ
 	if err != nil {
-		fmt.Fprint(os.Stderr, "file: "+os.Args[1]+" can't open to read")
+		fmt.Println("file: " + os.Args[1] + " can't open to read")
 		os.Exit(2)
 	}
-	fmt.Fprint(os.Stderr, "opened \n")
+	fmt.Println("' opened successfully")
 
-	fmt.Println("output file: ", outputFileName)
+	fmt.Print("output file: '", outputFileName)
 	oFile, err = os.Create(outputFileName) //Open file to WRITE
 	if err != nil {
-		fmt.Fprint(os.Stderr, "file: "+outputFileName+" can't open to write")
+		fmt.Println("file: " + outputFileName + " can't open to write")
 		os.Exit(3)
 	}
-	fmt.Fprint(os.Stderr, "opened \n")
+	fmt.Println("' opened successfully")
 
 	iScanner := bufio.NewScanner(iFile)
 	for i := 0; iScanner.Scan(); i++ {
 		s := iScanner.Text()
 		//Поиск начала объекта
 		if inputType == 1 {
-			//при разборе линии надо запомнить что линия началась, когда начнётся
-			//новая линия запишем -999
+			//ищем начало полилинии, строка с новой полилинией содержит "POLYLINE"
 			if strings.Contains(s, _PolylineCommand) {
-				index = _PolylineCommandIndex
 				//запишем конец полилинии (если это не первая)
 				if countCommands > 0 {
 					fmt.Fprintf(oFile, "%s\n", "-999 -999 -999")
 				}
+				//при разборе линии надо запомнить что линия началась, когда начнётся
+				//новая линия запишем в поток "-999 -999 -999"
 				countCommands++
 			} else {
-				//пишем в консоль, чтобы видно было, что программа работает
-				fmt.Fprint(os.Stderr, ".")
+				fmt.Print(".") //пишем в консоль, чтобы видно было, что программа работает
 				//Поиск строк координат и их разбор
-				if strings.Contains(s, cmd[index].pntString) {
+				if strings.Contains(s, _PolylinePrefixCoord) {
 					//строка с координатами найдена
 					ProcessLine(oFile, s)
 				}
 			}
 		} else { //обработка кругов
-			//пишем в консоль, чтобы видно было, что программа работает
-			fmt.Fprint(os.Stderr, ".")
+			fmt.Print(".") //пишем в консоль, чтобы видно было, что программа работает
 			//при обработке кругов координата начинается с "center point,"
 			if strings.Contains(s, _CirclePrefixCoord) {
 				//строка с координатами найдена
@@ -143,12 +134,15 @@ func main() {
 		fmt.Fprintf(oFile, "%s\n", "-999 -999 -999")
 	}
 
-	fmt.Fprint(os.Stderr, "\n")
-	fmt.Fprint(os.Stderr, "done: ", countCommands, " objects\n")
+	fmt.Print("\n")
+	fmt.Print("done: ", countCommands, " objects\n")
 }
 
 //ProcessLine Обработка строки "s" с координатами x= 111 y=111 z =111
 //результат записываем в файл "f"
+//--функцию необходимо переделать. ей не надо писать в консоль, надо возвращять ошибку
+//--и большой вопрос надо ли ей писать в файл, может вернуть строку которую надо писать
+//  вдруг захочу писать не в файл а в поток или в базу
 func ProcessLine(f *os.File, s string) {
 	i := strings.LastIndex(s, "=") + 1
 	//находим "=" c конца, от этой позиции "i" до конца это Z
@@ -178,17 +172,16 @@ func ProcessLine(f *os.File, s string) {
 		fmt.Printf("strvconv not pass: '%s'\n", s[i:])
 	}
 	fmt.Fprintf(f, "%f   %f   %f\n", X, Y, Z)
-
 }
 
 //TestInputParams - test input params
 //exit if params not true
 func TestInputParams() bool {
 	if len(os.Args) < 2 {
-		fmt.Fprint(os.Stderr, "using:> alg c:\\log\\i.log v:\\dat\\o.xyz \n")
-		fmt.Fprint(os.Stderr, "for polyline \n\n")
-		fmt.Fprint(os.Stderr, "using:> alg /c c:\\log\\i.log v:\\dat\\o.xyz \n")
-		fmt.Fprint(os.Stderr, "for circle \n\n")
+		fmt.Print("using:> alg c:\\log\\i.log v:\\dat\\o.xyz \n")
+		fmt.Print("for polyline \n\n")
+		fmt.Print("using:> alg /c c:\\log\\i.log v:\\dat\\o.xyz \n")
+		fmt.Print("for circle \n\n")
 		return false
 	}
 	return true
