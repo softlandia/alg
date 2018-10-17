@@ -5,6 +5,7 @@ softlandia@gmail.com
 dependences: -
 
 using
+
 alg c:\log\i.log v:\dat\o.xyz
 
 sample input file: 1.log
