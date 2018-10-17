@@ -1,0 +1,204 @@
+[ AutoCAD - Mon Oct 01 18:54:07 2018  ]----------------------------------------
+Regenerating model.
+
+
+AutoCAD menu utilities loaded.*Cancel*
+
+Command: 
+Command: 
+
+Command: 
+Command: Specify opposite corner or [Fence/WPolygon/CPolygon]: 
+Command: LIST
+12 found
+
+                  LWPOLYLINE  Layer: "—≈…—Ã» ¿ ÎËÌËË"
+                            Space: Model space
+                   Handle = bc6c
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3265.4336 
+
+          at point  X=6382.5472  Y=2544.4529  Z=   0.0000
+          at point  X=9060.8673  Y= 676.3903  Z=   0.0000
+
+                  LWPOLYLINE  Layer: "Õ¿–”ÿ≈Õ»ﬂ"
+                            Space: Model space
+Linetype scaling =   25.0000
+                   Handle = bc6b
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3317.6669 
+
+          at point  X=6098.5189  Y=2318.9708  Z=   0.0000
+          at point  X=8862.3874  Y= 483.7746  Z=   0.0000
+Press ENTER to continue: 
+
+                  LWPOLYLINE  Layer: "!À”"
+                            Space: Model space
+Linetype scaling =   25.0000
+                   Handle = bc6a
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3396.1871 
+
+          at point  X=5881.3578  Y=2187.4155  Z=   0.0000
+          at point  X=8717.6134  Y= 319.3305  Z=   0.0000
+
+                  LWPOLYLINE  Layer: "»«ŒÀ»Õ»»"
+                            Space: Model space
+Linetype scaling =   25.0000
+                   Handle = bc69
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3489.3683 
+
+          at point  X=5697.0999  Y=2075.5935  Z=   0.0000
+          at point  X=8618.9038  Y= 168.0419  Z=   0.0000
+Press ENTER to continue: 
+
+                  LWPOLYLINE  Layer: "√Õ  ÔÂ‰˚‰Û˘ËÈ"
+                            Space: Model space
+Linetype scaling =   25.0000
+                   Handle = bc68
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3317.6669 
+
+          at point  X=5565.4871  Y=1865.1050  Z=   0.0000
+          at point  X=8329.3556  Y=  29.9088  Z=   0.0000
+
+                  LWPOLYLINE  Layer: "√¬ "
+                            Space: Model space
+                   Color: BYLAYER    Linetype: "_GWCint_"
+Linetype scaling =   25.0000
+                   Handle = bc67
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3396.1871 
+
+          at point  X=5348.3260  Y=1733.5498  Z=   0.0000
+Press ENTER to continue: 
+          at point  X=8184.5815  Y=-134.5353  Z=   0.0000
+
+                  LWPOLYLINE  Layer: "√¬ "
+                            Space: Model space
+Linetype scaling =   25.0000
+                   Handle = bc66
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3489.3683 
+
+          at point  X=5164.0681  Y=1621.7278  Z=   0.0000
+          at point  X=8085.8720  Y=-285.8238  Z=   0.0000
+
+                  LWPOLYLINE  Layer: "¬Õ  ÔÂ‰˚‰Û˘ËÈ"
+                            Space: Model space
+Linetype scaling =   25.0000
+                   Handle = bc65
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3317.6669 
+
+          at point  X=4960.0683  Y=1424.3949  Z=   0.0000
+Press ENTER to continue: 
+          at point  X=7723.9368  Y=-410.8013  Z=   0.0000
+
+                  LWPOLYLINE  Layer: "¬Õ "
+                            Space: Model space
+                   Color: BYLAYER    Linetype: "ACAD_ISO05W100"
+Linetype scaling =   25.0000
+                   Handle = bc64
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3396.1871 
+
+          at point  X=4742.9072  Y=1292.8396  Z=   0.0000
+          at point  X=7579.1627  Y=-575.2455  Z=   0.0000
+
+                  LWPOLYLINE  Layer: "¬Õ "
+                            Space: Model space
+Linetype scaling =   25.0000
+                   Handle = bc63
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3489.3683 
+
+Press ENTER to continue: 
+          at point  X=4558.6493  Y=1181.0176  Z=   0.0000
+          at point  X=7480.4531  Y=-726.5340  Z=   0.0000
+
+                  LWPOLYLINE  Layer: "«ŒÕ¿ Á‡ÏÂ˘ÂÌËˇ"
+                            Space: Model space
+Linetype scaling =  125.0000
+                   Handle = bc62
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3733.3464 
+
+          at point  X=4189.1885  Y= 970.7753  Z=   0.0000
+          at point  X=7280.9041  Y=-1121.8715  Z=   0.0000
+
+                  LWPOLYLINE  Layer: "«ŒÕ¿ ‚˚ÍÎËÌË‚‡ÌËˇ"
+                            Space: Model space
+Linetype scaling =   50.0000
+                   Handle = bc61
+              Open 
+    Constant width    0.0000
+              area   0.0000
+            length   3768.5342 
+
+Press ENTER to continue: 
+          at point  X=3894.5967  Y= 773.4876  Z=   0.0000
+          at point  X=7046.2921  Y=-1292.5875  Z=   0.0000
+
+Command: 
+LIST
+
+Select objects: 
+
+Command: 
+LIST
+
+Select objects: 
+
+Command: 
+LIST
+
+Select objects: 
+
+Command: 
+LIST
+
+Select objects: 
+
+Command: 
+LIST
+
+Select objects: 
+
+Command: 
+LIST
+
+Select objects: 
+
+Command: 
+LIST
+
+Select objects: *Cancel*
+
+Command: *Cancel*
+
+Command: _close 
+Command: 
